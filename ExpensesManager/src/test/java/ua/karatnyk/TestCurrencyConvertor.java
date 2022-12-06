@@ -27,12 +27,25 @@ public class TestCurrencyConvertor {
     public static void blackBox() throws ParseException{
         conversion = new JsonWorker().parser();
         convertor = new CurrencyConvertor();
-
+        String[] devises = {"USD", "CAD", "GBP", "EUR", "CHF", "INR", "AUD"};
+        int devisesLenght = devises.length;
         System.out.println(convertor.convert(33, "USD", "CAD", conversion));
+        for (int i = 0; i < devisesLenght; i++) {
+            for (int j = 0; j < devisesLenght; j++) {
+                if(i != j){
+                    System.out.println(devises[i]+" "+devises[j]);
+                    //test les motants
+                    Double normal = convertor.convert(50, devises[i], devises[j], conversion);
+                    Double below = convertor.convert(-1, devises[i], devises[j], conversion);
+                    Double over = convertor.convert(12333, devises[i], devises[j], conversion);
+                    System.out.println(normal+" "+below+" "+over);
+                }
+            }
+            System.out.println("----------------------");
+        }
     }
 
     public static void main(String[] args) throws ParseException{
         blackBox();
-        System.out.println("allo");
     }
 }
