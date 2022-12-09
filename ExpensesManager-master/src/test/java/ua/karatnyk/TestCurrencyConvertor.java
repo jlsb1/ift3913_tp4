@@ -58,9 +58,25 @@ public class TestCurrencyConvertor {
         assertTrue(output);
 	}
     
-    @Test(expected = ParseException.class)
-    public void convertUnknownDevise() throws ParseException{
+    @Test(expected = ParseException.class) 
+    public void convertUnknownDevise1() throws ParseException{
         CurrencyConvertor.convert(50, "CAD", "MXN", conversion);
+    }
+
+    @Test
+    public void convertUnknownDevise11() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(50, "CAD", "MXN", conversion));
+    }
+
+
+    @Test(expected = ParseException.class)
+    public void convertUnknownDevise2() throws ParseException{
+        CurrencyConvertor.convert(50, "MXN", "CAD", conversion);
+    }
+
+    @Test
+    public void convertUnknownDevise22() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(50, "MXN", "CAD", conversion));
     }
 
     @Test(expected = ParseException.class)
@@ -83,14 +99,24 @@ public class TestCurrencyConvertor {
         CurrencyConvertor.convert(50, "CA", "USD", conversion);
     }
 
-    @Test 
+    @Test(expected = ParseException.class) 
     public void montantToSmall() throws ParseException{
-        assertNull(CurrencyConvertor.convert(-12, "CAD", "USD", conversion));
+        CurrencyConvertor.convert(-12, "CAD", "USD", conversion);
+    }
+    
+    @Test
+    public void montantToSmall2() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(-12, "CAD", "USD", conversion));
+    }
+    
+    @Test(expected = ParseException.class) 
+    public void montantToBig() throws ParseException{
+        CurrencyConvertor.convert(14377, "CAD", "USD", conversion);
     }
 
-    @Test 
-    public void montantToBig() throws ParseException{
-        assertNull(CurrencyConvertor.convert(14377, "CAD", "USD", conversion));
+    @Test
+    public void montantToBig2() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(14377, "CAD", "USD", conversion));
     }
 
     @Test 
@@ -103,10 +129,19 @@ public class TestCurrencyConvertor {
         assertNotNull(CurrencyConvertor.convert(10000, "CAD", "USD", conversion));
     }
 
-    @Test 
+    @Test(expected = ParseException.class) 
     public void gotToBig() throws ParseException{
-        assertNull(CurrencyConvertor.convert(CurrencyConvertor.convert(9999, "USD", "CAD", conversion), "CAD", "USD", conversion));
+        CurrencyConvertor.convert(CurrencyConvertor.convert(9999, "USD", "CAD", conversion), "CAD", "USD", conversion);
     }
 
+    @Test
+    public void gotToBig2() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(CurrencyConvertor.convert(9999, "USD", "CAD", conversion), "CAD", "USD", conversion));
+    }
+
+    @Test
+    public void inRange() throws ParseException{
+        assertNotNull(CurrencyConvertor.convert(134, "USD", "CAD", conversion));
+    }
 }
 
